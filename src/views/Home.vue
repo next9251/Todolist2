@@ -35,7 +35,16 @@ export default {
    };
  },
  methods:{
-   update(index) {
+   button-add: function() {
+     this.items.push({
+       text: this.addText,
+       check: false,
+       dueDate: this.addDate,
+     });
+     this.addText = "";
+     this.addDate = null;
+   },
+   updateTodo(todo) {
         this.updateIndex = index;
         this.text = this.items[index];
         this.$refs.editor.focus();
