@@ -4,56 +4,56 @@
      <div class="card">
        <p class=title>Todo List</p>
        <div class=todo>
-         <form class="flex" action="送信先" method="post">
-           <input class="input-add" type="text" name="名前" value="送信されるデータ" v-model="todo">
-           <button class="button-add" type="submit" @click="add">追加</button>
-         </form>
-         <form class="flex"  action="受取先" method="put">
-           <input class="input-update" type="text"> 
-           <button class="button-update" @click="updateTodo(todo)">更新</button>
-           <button class="button-delete" @click="deleteTodo(todo)">削除</button>
-         </form>
-       </div>
+           <label class="flex" todo="todo" id="todo" for="Todo" ></label>
+           <input class="input-add" type="text" name="名前" v-model="todo">
+           <button class="button-add" type="submit" @click="add">追加</button>          
+           <div class="flex">
+             <input class="input-update" type="text" v-model="newtodo"> 
+             <button class="button-update" @click="updatetodo(newtodo)">更新</button>
+             <button class="button-delete" @click="deletetodo(newtodo)">削除</button>
+           </div>
+       </div> 
      </div>
    </div>
  </div>
 </template>  
 
 <script>
+import axios from "axios";
 export default {
  data(){
    return {
-     todo: "",
-
-     editIndex: -1, 
-
-    items: [       
-        "タスク１",
-        "タスク２",
-        "タスク３"
-    ]
+     todo:"",
    };
  },
  methods:{
-   button-add: function() {
-     this.items.push({
-       text: this.addText,
-       check: false,
-       dueDate: this.addDate,
-     });
-     this.addText = "";
-     this.addDate = null;
+   async getContact() {
+     const resData = await axios.get("https://frozen-peak-65901.herokuapp.com/api/register");
+     this.contactLists = resData.data.data;
    },
-   updateTodo(todo) {
-        this.updateIndex = index;
-        this.text = this.items[index];
-        this.$refs.editor.focus();
+   async add() {
+     const sendData = {
+       todo:this.todo,
+     };
+     await axios.post("https://frozen-peak-65901.herokuapp.com/api/register", sendData);
+     await this.getContact();
    },
-   deleteTodo: function (todo) {
-     this.todos.splice(this.todos.indexOf(todo), 1)
-    }
- }
-}
+   async updatetodo(todo) {
+      const sendData = {
+        todo:todo,
+      };
+      await axios.delete("https://frozen-peak-65901.herokuapp.com/api/register"+sendData);
+      await this.getContact();
+   },
+   async deletetodo(){
+     await axios.delete("https://frozen-peak-65901.herokuapp.com/api/register");
+     await this.getContact();
+   },
+ },
+ created() {
+   this.getContact();
+ },
+};
 </script>
 
 <style scoped>
