@@ -3,15 +3,16 @@
    <div class="container">
      <div class="card">
        <p class=title>Todo List</p>
-       <div class=todo>
-           <label class="flex" todo="todo" id="todo" for="Todo" ></label>
-           <input class="input-add" type="text" name="名前" v-model="todo">
-           <button class="button-add" type="submit" @click="add">追加</button>          
-           <div class="flex">
-             <input class="input-update" type="text" v-model="newtodo"> 
-             <button class="button-update" @click="updatetodo(newtodo)">更新</button>
-             <button class="button-delete" @click="deletetodo(newtodo)">削除</button>
-           </div>
+       <div class=todo >
+         <label class="flex" todo="todo" id="todo" for="Todo" ></label>
+         <input class="input-add" type="text" name="名前" v-model="newtodo">
+         <button class="button-add" type="submit" @click="add">追加</button>          
+         <tr class="flex" v-for="item in contactLists" :key="item.id">
+           <td>{{item.id}}</td>
+           <td><input class="input-update" type="text" v-model="item.todo"> </td>
+           <td><button class="button-update" @click="updatetodo(item.id,item.todo)">更新</button></td>
+           <td><button class="button-delete" @click="deletetodo(item.id)">削除</button></td>
+         </tr>
        </div> 
      </div>
    </div>
@@ -23,7 +24,8 @@ import axios from "axios";
 export default {
  data(){
    return {
-     todo:"",
+     newtodo:"",
+     contactLists:[],
    };
  },
  methods:{
@@ -33,33 +35,14 @@ export default {
    },
    async add() {
      const sendData = {
-       todo:this.todo,
+       todo:this.newtodo
      };
-
-
      await axios.post("http://127.0.0.1:8000/api/todo", sendData)
      .then((response)=>{
        console.log(response);
      }),
-
-       await this.getContact();
-  },
-
-
-   async updatetodo(newtodo) {
-      const sendData = {
-        todo:todo,
-      };
-      await axios.put("http://127.0.0.1:8000/api/todo"+sendData);
-      await this.getContact();
-   },
-   async deletetodo(){
-     await axios.delete("http://127.0.0.1:8000/api/todo");
      await this.getContact();
-   },
- },
- created() {
-   this.getContact();
+   },                                   
  },
 };
 </script>
