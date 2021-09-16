@@ -28,25 +28,33 @@ export default {
  },
  methods:{
    async getContact() {
-     const resData = await axios.get("https://frozen-peak-65901.herokuapp.com/api/register");
+     const resData = await axios.get("http://127.0.0.1:8000/api/todo");
      this.contactLists = resData.data.data;
    },
    async add() {
      const sendData = {
        todo:this.todo,
      };
-     await axios.post("https://frozen-peak-65901.herokuapp.com/api/register", sendData);
-     await this.getContact();
-   },
-   async updatetodo(todo) {
+
+
+     await axios.post("http://127.0.0.1:8000/api/todo", sendData)
+     .then((response)=>{
+       console.log(response);
+     }),
+
+       await this.getContact();
+  },
+
+
+   async updatetodo(newtodo) {
       const sendData = {
         todo:todo,
       };
-      await axios.delete("https://frozen-peak-65901.herokuapp.com/api/register"+sendData);
+      await axios.put("http://127.0.0.1:8000/api/todo"+sendData);
       await this.getContact();
    },
    async deletetodo(){
-     await axios.delete("https://frozen-peak-65901.herokuapp.com/api/register");
+     await axios.delete("http://127.0.0.1:8000/api/todo");
      await this.getContact();
    },
  },
