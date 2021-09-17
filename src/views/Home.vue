@@ -44,6 +44,9 @@ export default {
      await this.getContact();
    },                                   
  },
+ created() {
+   this.getContact();
+ },
 };
 </script>
 
@@ -54,7 +57,6 @@ export default {
   width: 100vw;
   position: relative;
 }
-
 .card{
   background-color: #fff;
   width: 50vw;
@@ -155,4 +157,3 @@ export default {
   margin-right: 5px;
 }
 </style>
-
