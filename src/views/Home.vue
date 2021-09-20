@@ -42,7 +42,19 @@ export default {
        console.log(response);
      }),
      await this.getContact();
-   },                                   
+   },    
+    async updatetodo() {
+      const sendData = {
+        todo:this.newtodo,  
+      };
+      await axios.put("http://127.0.0.1:8000/api/todo"+sendData);
+      await this.getContact();
+   },
+   async deletetodo(){
+     await axios.delete("http://127.0.0.1:8000/api/todo");
+     await this.getContact();
+   },
+   
  },
  created() {
    this.getContact();
