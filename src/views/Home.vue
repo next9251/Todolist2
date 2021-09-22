@@ -50,8 +50,8 @@ export default {
       await axios.put("http://127.0.0.1:8000/api/todo"+sendData);
       await this.getContact();
    },
-   async deletetodo(){
-     await axios.delete("http://127.0.0.1:8000/api/todo");
+   async deletetodo(id){
+     await axios.delete("http://127.0.0.1:8000/api/todo"+id);
      await this.getContact();
    },
    
